@@ -54,6 +54,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/facebook/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").anonymous()
+                .antMatchers(HttpMethod.GET, "/insta/**").permitAll()
                 .anyRequest().authenticated();
     }
 

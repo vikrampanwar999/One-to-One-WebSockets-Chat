@@ -50,6 +50,7 @@ const Chat = (props) => {
   const onConnected = () => {
     console.log("connected");
     console.log(currentUser);
+    console.log("usrs aces token{} ",localStorage.getItem("accessToken"));
     stompClient.subscribe(
       "/user/" + currentUser.id + "/queue/messages",
       onMessageReceived
@@ -115,6 +116,9 @@ const Chat = (props) => {
       })
     );
   };
+
+
+
 
   return (
     <div id="frame">

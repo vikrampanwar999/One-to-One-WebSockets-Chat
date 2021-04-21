@@ -26,7 +26,7 @@ public class FacebookService {
 
     public String loginUser(String fbAccessToken) {
         var facebookUser = facebookClient.getUser(fbAccessToken);
-
+        log.info("facebook user info:{}",facebookUser);
         return userService.findById(facebookUser.getId())
                 .or(() -> Optional.ofNullable(userService.registerUser(convertTo(facebookUser), Role.FACEBOOK_USER)))
                 .map(InstaUserDetails::new)

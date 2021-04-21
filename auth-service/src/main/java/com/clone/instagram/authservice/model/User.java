@@ -1,6 +1,8 @@
 package com.clone.instagram.authservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mongodb.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +37,8 @@ public class User {
         this.active = user.active;
         this.userProfile = user.userProfile;
         this.roles = user.roles;
+        this.address=user.address;
+        this.instaUserInfo=user.instaUserInfo;
     }
 
     public User(String username, String password, String email) {
@@ -43,6 +47,14 @@ public class User {
         this.email = email;
         this.active = true;
         this.roles = new HashSet<>() {{ new Role("USER"); }};
+    }
+    public User(String username, String password, String email,Address address) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.active = true;
+        this.roles = new HashSet<>() {{ new Role("USER"); }};
+        this.address=address;
     }
 
     @Id
@@ -71,4 +83,10 @@ public class User {
     private boolean active;
     private Profile userProfile;
     private Set<Role> roles;
+    
+    private Address address;
+    
+    private InstaUserInfo instaUserInfo;
+    
+   
 }
