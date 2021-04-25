@@ -1,33 +1,63 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import InstagramLogin from 'react-instagram-login';
+import axios from 'axios';
+import properties from '../config/properties';
+const FormData = require('form-data');
 
-const responseInstagram = (responsek) => {
-  console.log("instalogin response");
+const getInstaUserInfo=(response)=>{
+  console.log('inside getInstaUserInfo');
+  console.log(response.data);
+  axios.post(properties.INSTA_USER_INFO,response.data)
+    .then(function (response) {
+      //handle success
+      console.log(response);
+    })
+    .catch(function (response) {
+      //handle error
+      console.log(response);
+    });
+}
+
+const failedresponseInstagram = (responsek) => {
+  console.log("instalogin failrue response");
   console.log(responsek);
   localStorage.setItem("instalogin", responsek);
 };
 
+const successResponse=(code)=>{
+  var bodyFormData = new FormData();
+  bodyFormData.append('redirect_uri', properties.INSTA_REDIRECT_URL);
+  bodyFormData.append('code', code);
+  bodyFormData.append('client_id', properties.INSTA_CLIENT_ID);
+  bodyFormData.append('client_secret', properties.INSTA_CLIENT_SECRECT);
+  bodyFormData.append('grant_type', 'authorization_code');
+  axios({
+    method: "post",
+    url: properties.INSTA_ACCESS_TOKEN_URL,
+    data: bodyFormData,
+    headers: { "Content-Type": "multipart/form-data",
+    Accept: 'application/vnd.api+json',
+  },
+  })
+    .then(getInstaUserInfo)
+    .catch(function (response) {
+      //handle error
+      console.log(response);
+    });
+}
 const InstaLogin= (props)=>{
   
   return (
-    <div>
-      <InstagramLogin
-    clientId="156957412902052"
+    <InstagramLogin
+    clientId={properties.INSTA_CLIENT_ID}
     buttonText="Login"
-    redirectUri="https://cbd567452dbc.ngrok.io/instalogin"
+    redirectUri={properties.INSTA_REDIRECT_URL}
     scope="user_profile,user_media"
-    onSuccess={responseInstagram}
-    onFailure={responseInstagram}
+    onSuccess={successResponse}
+    onFailure={failedresponseInstagram}
   />
-   <div
-  class="fb-like"
-  data-share="true"
-  data-width="450"
-  data-show-faces="true">
-</div>
-    <span> Login with Instagram</span>
-    </div>
+ 
   );
 
 }

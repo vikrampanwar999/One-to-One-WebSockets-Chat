@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import { login, facebookLogin } from "../util/ApiUtil";
 import "./Signin.css";
+import properties from '../config/properties';
 
 /*global FB*/
 
@@ -30,7 +31,7 @@ const Signin = (props) => {
   const initFacebookLogin = () => {
     window.fbAsyncInit = function () {
       FB.init({
-        appId: "358238235599355",
+        appId: properties.FB_APP_ID,
         autoLogAppEvents: true,
         xfbml: true,
         version: "v7.0",
