@@ -14,8 +14,8 @@ const Accounts =(props)=>{
         getInstaUserInfo().then(
             res=>{
                 console.log("associated insta accounsts are",res[0].instaUserName);
-                // setinstaUserList(instaUserList => [...instaUserList, ...res[0]]);
-                setinstaUserList(res[0]);
+                //  setinstaUserList(instaUserList => [...instaUserList, res[0]]);
+                setinstaUserList(res);
                 console.log(res);
                 
             }
@@ -23,10 +23,13 @@ const Accounts =(props)=>{
     }
     // const currentUser1 = useRecoilValue(loggedInUser);
     // const currentInstaUser2 = useRecoilValue(loggedInInstaUser);
- const [instaUserList, setinstaUserList] = useState({});
+ const [instaUserList, setinstaUserList] = useState([]);
     // console.log("Accounts 1",currentUser1);
     // console.log("Accounts 2",currentInstaUser2);
-     LinkInstaAccount(props);
+    useEffect(() => {
+        LinkInstaAccount(props);
+      }, []);
+     
      const currentInstaUser3={};
     //  =getInstaUserInfo()[0];
     console.log("33",{instaUserList});
