@@ -2,7 +2,9 @@ package com.clone.instagram.authservice.service;
 
 import com.clone.instagram.authservice.exception.EmailAlreadyExistsException;
 import com.clone.instagram.authservice.exception.UsernameAlreadyExistsException;
+import com.clone.instagram.authservice.model.InstaUserInfo;
 import com.clone.instagram.authservice.model.Role;
+import com.clone.instagram.authservice.repository.InstaAccountRepository;
 import com.clone.instagram.authservice.repository.UserRepository;
 import com.clone.instagram.authservice.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +26,7 @@ public class UserService {
     @Autowired private UserRepository userRepository;
     @Autowired private AuthenticationManager authenticationManager;
     @Autowired private JwtTokenProvider tokenProvider;
-
+    @Autowired private InstaAccountRepository instaAccountRepository;
 
     public String loginUser(String username, String password) {
        Authentication authentication = authenticationManager
@@ -71,5 +73,17 @@ public class UserService {
     public Optional<User> findById(String id) {
         log.info("retrieving user {}", id);
         return userRepository.findById(id);
+    }
+    public List<InstaUserInfo> getInstaAccountsByFbUserName(String fbUserName){
+    	log.info("retrieving fblinked insta accounts {}", fbUserName);
+    	return instaAccountRepository.findByFbUserName(fbUserName);
+    }
+    public List<InstaUserInfo> getAllInstaAccounts(){
+    	log.info("retrieving all insta accounts ");
+    	return instaAccountRepository.findAll();
+    }
+    public void saveInstaAccount(InstaUserInfo instaUserInfo) {
+    	log.info("saving instaAccount {}",instaUserInfo);
+    	instaAccountRepository.save(instaUserInfo);
     }
 }

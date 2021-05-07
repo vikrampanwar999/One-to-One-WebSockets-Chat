@@ -16,9 +16,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Document
 public class InstaUserInfo {
-	@Id
+	
     private String id;
+    @Id
 	private String instaUserName;
 	private Integer followers;
 	private Integer followings;
@@ -30,5 +32,6 @@ public class InstaUserInfo {
 	private Boolean isJoinedRecently;
 	private Boolean isPrivate;
 	private String instaProfilePicUrl;
+	private String fbUserName;
 
 }

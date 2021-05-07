@@ -20,7 +20,8 @@
     "react-scroll-to-bottom": "^3.0.0",
     "react-stomp": "^5.0.0",
     "recoil": "0.0.10",
-    "sockjs-client": "^1.4.0"
+    "sockjs-client": "^1.4.0",
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

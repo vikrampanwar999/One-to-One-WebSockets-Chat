@@ -10,9 +10,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(exclude = EmbeddedMongoAutoConfiguration.class)
+//@SpringBootApplication
 @EnableMongoAuditing
 @Slf4j
-@EnableMongoRepositories
+//@EnableMongoRepositories
 public class AuthServiceApplication {
 
 	public static void main(String[] args) {

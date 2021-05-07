@@ -8,7 +8,8 @@ import {
 } from "@ant-design/icons";
 import { login, facebookLogin } from "../util/ApiUtil";
 import "./Signin.css";
-import properties from '../config/properties';
+import properties,{cookies} from '../config/properties';
+
 
 /*global FB*/
 
@@ -52,6 +53,7 @@ const Signin = (props) => {
           facebookLogin(facebookLoginRequest)
             .then((response) => {
               localStorage.setItem("accessToken", response.accessToken);
+              cookies.set('fb_accessToken',response.accessToken,{ path: '/' });
               props.history.push("/");
               setFacebookLoading(false);
               console.log("fblogin")

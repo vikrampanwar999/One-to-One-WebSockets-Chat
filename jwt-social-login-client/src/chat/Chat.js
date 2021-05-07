@@ -18,6 +18,8 @@ import "./Chat.css";
 var stompClient = null;
 const Chat = (props) => {
   const currentUser = useRecoilValue(loggedInUser);
+  console.log('inside Chat');
+  console.log(currentUser);
   const [text, setText] = useState("");
   const [contacts, setContacts] = useState([]);
   const [activeContact, setActiveContact] = useRecoilState(chatActiveContact);

@@ -9,7 +9,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 import lombok.extern.slf4j.Slf4j;
 
-@SpringBootApplication(exclude = EmbeddedMongoAutoConfiguration.class)
+//@SpringBootApplication(exclude = EmbeddedMongoAutoConfiguration.class)
+@SpringBootApplication
 @EnableMongoAuditing
 @Slf4j
 @EnableMongoRepositories

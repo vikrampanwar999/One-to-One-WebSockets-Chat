@@ -15,7 +15,7 @@ security:
     uri: /auth/**
     header: Authorization
     prefix: Bearer
-    expiration: 86400
+    expiration: 8640000
     secret: JwtSecretKey
 
 feign:

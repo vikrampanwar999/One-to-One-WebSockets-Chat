@@ -15,5 +15,6 @@ public class InstaUserInfoRequest {
 	
 	private String access_token;
 	private String user_id;
+
 	
 }
