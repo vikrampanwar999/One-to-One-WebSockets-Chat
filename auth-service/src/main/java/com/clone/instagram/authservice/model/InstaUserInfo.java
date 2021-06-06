@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Document
 public class InstaUserInfo {
 	
-    private String id;
     @Id
 	private String instaUserName;
 	private Integer followers;

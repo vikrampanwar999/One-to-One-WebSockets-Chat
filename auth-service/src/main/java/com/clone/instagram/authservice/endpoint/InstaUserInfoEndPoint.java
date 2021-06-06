@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -25,6 +26,7 @@ import com.clone.instagram.authservice.fetchdata.FetchInstaaUserDetails;
 import com.clone.instagram.authservice.model.InstaUserDetails;
 import com.clone.instagram.authservice.model.InstaUserInfo;
 import com.clone.instagram.authservice.model.InstaUserInfoRequest;
+import com.clone.instagram.authservice.model.User;
 import com.clone.instagram.authservice.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -44,11 +46,14 @@ public class InstaUserInfoEndPoint {
         log.info("retrieving fbuser {}", userDetails);
         InstaUserInfo instaUser=fetchInstaaUserDetails.getUserDetailsFromUserId(userInfoRequest);
         instaUser.setFbUserName(userDetails.getUsername());
-        //don't savve if it's already there
+        User instaUserInDb=userService.findByUsername(instaUser.getInstaUserName()).orElse(null);
+        if(instaUserInDb!=null&&instaUserInDb.getInstaUserInfo().getFbUserName().equals(userDetails.getUsername())) {
+        log.info("insta user:{} is already registred with {}",instaUserInDb.getUsername(),userDetails.getUsername());
+        }
+        else {
         userService.saveInstaAccount(instaUser);
-        List<InstaUserInfo> assoicatedArrayList=fbUserNameToInstaNames.getOrDefault(userDetails.getUsername(), new ArrayList<>());
-        assoicatedArrayList.add(instaUser);
-        fbUserNameToInstaNames.put(userDetails.getUsername(), assoicatedArrayList);
+        }
+        
         return  ResponseEntity.ok(instaUser);
     }
     @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
