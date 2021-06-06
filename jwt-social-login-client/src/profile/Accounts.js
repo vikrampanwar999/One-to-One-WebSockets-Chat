@@ -11,31 +11,22 @@ const { Meta } = Card;
 
 const Accounts =(props)=>{
     const LinkInstaAccount=(props)=>{
+        console.log("fetching linked insta profiles");
         getInstaUserInfo().then(
             res=>{
                 console.log("associated insta accounsts are",res[0].instaUserName);
-                //  setinstaUserList(instaUserList => [...instaUserList, res[0]]);
                 setinstaUserList(res);
                 console.log(res);
                 
             }
         )
     }
-    // const currentUser1 = useRecoilValue(loggedInUser);
-    // const currentInstaUser2 = useRecoilValue(loggedInInstaUser);
  const [instaUserList, setinstaUserList] = useState([]);
-    // console.log("Accounts 1",currentUser1);
-    // console.log("Accounts 2",currentInstaUser2);
     useEffect(() => {
         LinkInstaAccount(props);
       }, []);
      
-     const currentInstaUser3={};
-    //  =getInstaUserInfo()[0];
-    console.log("33",{instaUserList});
-    
-//send both the requests
-
+    if(instaUserList[0]){
     return (
         <div className="profile-container">
       <Card
@@ -45,16 +36,22 @@ const Accounts =(props)=>{
         <Meta
           avatar={
             <Avatar
-              src={currentInstaUser3.instaProfilePicUrl}
+              src={instaUserList[0].instaProfilePicUrl}
               className="user-avatar-circle"
             />
           }
-          title={currentInstaUser3.instaUserName}
-          description={"@" + currentInstaUser3 .instaUserName}
+          title={instaUserList[0].instaUserName}
+          description={"@" + instaUserList[0].instaUserName}
         />
       </Card>
     </div>
-    )
+    );
+        }
+        else{
+          return(<div>
+            does not any associated insta account
+          </div>);
+        }
 
 }
 

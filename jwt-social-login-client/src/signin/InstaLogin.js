@@ -15,6 +15,7 @@ const InstaLogin= (props)=>{
   console.log("props in instalogin",props);
   const [currentInstaUser, setLoggedInInstaUser] = useRecoilState(loggedInInstaUser);
   useEffect(() => {
+    //check for expiration of token as well
     if (localStorage.getItem("accessToken") === null) {
       props.history.push("/login");
     }
@@ -36,7 +37,8 @@ const getInstaUserInfoFromService=(response)=>{
   );
   console.log("user_info",user_info);
 
-  //  props.history.push("/me");
+  //redirecting to account.js
+  // props.history.push("/me");
   }
 }
 

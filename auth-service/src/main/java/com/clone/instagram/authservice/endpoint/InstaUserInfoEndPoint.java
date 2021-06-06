@@ -2,6 +2,7 @@ package com.clone.instagram.authservice.endpoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -38,10 +39,12 @@ public class InstaUserInfoEndPoint {
 	
     @PostMapping(value = "/register/user", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> getUserSummary(@RequestBody InstaUserInfoRequest userInfoRequest,@AuthenticationPrincipal InstaUserDetails userDetails) {
-        log.info("retrieving user {}", userInfoRequest);
+      
+    	log.info("retrieving user {}", userInfoRequest);
         log.info("retrieving fbuser {}", userDetails);
         InstaUserInfo instaUser=fetchInstaaUserDetails.getUserDetailsFromUserId(userInfoRequest);
         instaUser.setFbUserName(userDetails.getUsername());
+        //don't savve if it's already there
         userService.saveInstaAccount(instaUser);
         List<InstaUserInfo> assoicatedArrayList=fbUserNameToInstaNames.getOrDefault(userDetails.getUsername(), new ArrayList<>());
         assoicatedArrayList.add(instaUser);
@@ -49,22 +52,15 @@ public class InstaUserInfoEndPoint {
         return  ResponseEntity.ok(instaUser);
     }
     @GetMapping(value = "/accounts", produces = MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<?> getUserSummary(@AuthenticationPrincipal InstaUserDetails userDetails) {
+    public ResponseEntity<?> getUserSummary(@AuthenticationPrincipal InstaUserDetails userDetails) {   
+    	//check if username doesn't change with time
         log.info("retrieving fbuser {}", userDetails);
-        List<InstaUserInfo> assoicatedArrayList=fbUserNameToInstaNames.getOrDefault(userDetails.getUsername(), new ArrayList<>());
-        return  ResponseEntity.ok(assoicatedArrayList);
+        List<InstaUserInfo> accounts=userService.getInstaAccountsByFbUserName(userDetails.getUsername());
+        return  ResponseEntity.ok(accounts);
     }
     
-    @EventListener(ApplicationReadyEvent.class)
-    public void init() {
-    	fbUserNameToInstaNames.clear();
-    	List<InstaUserInfo> accounts=userService.getAllInstaAccounts();
-    	for(InstaUserInfo account:accounts) {
-    		List<InstaUserInfo> list=fbUserNameToInstaNames.getOrDefault(account.getFbUserName(), new ArrayList<>());
-    		list.add(account);
-    		fbUserNameToInstaNames.put(account.getFbUserName(), list);
-    	}
-    }
+    
+    
 
 
 }

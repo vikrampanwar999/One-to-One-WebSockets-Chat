@@ -2,6 +2,7 @@ package com.clone.instagram.authservice.service;
 
 import com.clone.instagram.authservice.exception.EmailAlreadyExistsException;
 import com.clone.instagram.authservice.exception.UsernameAlreadyExistsException;
+import com.clone.instagram.authservice.model.InstaUserDetails;
 import com.clone.instagram.authservice.model.InstaUserInfo;
 import com.clone.instagram.authservice.model.Role;
 import com.clone.instagram.authservice.repository.InstaAccountRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -86,4 +89,5 @@ public class UserService {
     	log.info("saving instaAccount {}",instaUserInfo);
     	instaAccountRepository.save(instaUserInfo);
     }
+    
 }

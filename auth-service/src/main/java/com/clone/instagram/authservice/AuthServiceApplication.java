@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 //@SpringBootApplication
 @EnableMongoAuditing
 @Slf4j
-//@EnableMongoRepositories
+@EnableMongoRepositories
 public class AuthServiceApplication {
 
 	public static void main(String[] args) {

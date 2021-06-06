@@ -51,7 +51,7 @@ public class FetchInstaaUserDetails {
 		
 	}
 	public InstaUserInfo getUserDetailsFromUserId(InstaUserInfoRequest instaUserInfoRequest) {
-//		String url=instaUserNameApi.replace("{user-id}", instaUserInfoRequest.getUser_id());
+
 		String url=instaUserNameApi2;
 		url=url.replace("{ACCESS-TOKEN}", instaUserInfoRequest.getAccess_token());
 		ResponseEntity<Map> responseEntity=restTemplate.getForEntity(url, Map.class);
